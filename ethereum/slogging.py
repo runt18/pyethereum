@@ -131,13 +131,13 @@ class SLogger(logging.Logger):
                 for k, v in kwargs.items()
             }
 
-            message['event'] = "{}.{}".format(self.name, msg)
+            message['event'] = "{0}.{1}".format(self.name, msg)
             msg = json.dumps(message)
         else:
-            msg = "{}{} {}{}".format(
+            msg = "{0}{1} {2}{3}".format(
                 bcolors.WARNING if highlight else "",
                 msg,
-                " ".join("{}={!s}".format(k, v) for k, v in kwargs.items()),
+                " ".join("{0}={1!s}".format(k, v) for k, v in kwargs.items()),
                 bcolors.ENDC if highlight else ""
             )
 
@@ -217,7 +217,7 @@ def getLogger(name=None):
 
 def configure(config_string=None, log_json=False, log_file=None):
     if not config_string:
-        config_string = ":{}".format(DEFAULT_LOGLEVEL)
+        config_string = ":{0}".format(DEFAULT_LOGLEVEL)
 
     if log_json:
         log_format = JSON_FORMAT
@@ -234,7 +234,7 @@ def configure(config_string=None, log_json=False, log_file=None):
     if log_file:
         if not any(isinstance(hndlr, FileHandler) for hndlr in rootLogger.handlers):
             handler = FileHandler(log_file)
-            formatter = Formatter("{} {}".format(FILE_PREFIX, log_format))
+            formatter = Formatter("{0} {1}".format(FILE_PREFIX, log_format))
             handler.setFormatter(formatter)
             rootLogger.addHandler(handler)
 

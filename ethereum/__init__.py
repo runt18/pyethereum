@@ -28,7 +28,7 @@ if not __version__:
                                       stderr=subprocess.STDOUT)
         match = GIT_DESCRIBE_RE.match(rev)
         if match:
-            __version__ = "{}+git-{}".format(match.group("version"), match.group("git"))
+            __version__ = "{0}+git-{1}".format(match.group("version"), match.group("git"))
     except:
         pass
 
