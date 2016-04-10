@@ -247,7 +247,9 @@ class state():
     def send(self, *args, **kwargs):
         return self._send(*args, **kwargs)["output"]
 
-    def mkspv(self, sender, to, value, data=[], funid=None, abi=None):
+    def mkspv(self, sender, to, value, data=None, funid=None, abi=None):
+        if data is None:
+            data = []
         sendnonce = self.block.get_nonce(u.privtoaddr(sender))
         if funid is not None:
             evmdata = serpent.encode_abi(funid, *abi)
@@ -258,8 +260,12 @@ class state():
         tx.sign(sender)
         return spv.mk_transaction_spv_proof(self.block, tx)
 
-    def verifyspv(self, sender, to, value, data=[],
-                  funid=None, abi=None, proof=[]):
+    def verifyspv(self, sender, to, value, data=None,
+                  funid=None, abi=None, proof=None):
+        if data is None:
+            data = []
+        if proof is None:
+            proof = []
         sendnonce = self.block.get_nonce(u.privtoaddr(sender))
         if funid is not None:
             evmdata = serpent.encode_abi(funid, *abi)
@@ -270,8 +276,10 @@ class state():
         tx.sign(sender)
         return spv.verify_transaction_spv_proof(self.block, tx, proof)
 
-    def trace(self, sender, to, value, data=[]):
+    def trace(self, sender, to, value, data=None):
         # collect log events (independent of loglevel filters)
+        if data is None:
+            data = []
         recorder = LogRecorder()
         self.send(sender, to, value, data)
         return recorder.pop_records()

@@ -59,7 +59,9 @@ class ProofConstructor():
         self.nodes = []
         self.exempt = []
 
-    def push(self, mode, nodes=[]):
+    def push(self, mode, nodes=None):
+        if nodes is None:
+            nodes = []
         global proving
         proving = True
         self.mode.append(mode)
@@ -457,8 +459,10 @@ class Trie(object):
         else:
             return new_node
 
-    def _getany(self, node, reverse=False, path=[]):
+    def _getany(self, node, reverse=False, path=None):
         # print 'getany', node, 'reverse=', reverse, path
+        if path is None:
+            path = []
         node_type = self._get_node_type(node)
         if node_type == NODE_TYPE_BLANK:
             return None
@@ -602,8 +606,10 @@ class Trie(object):
         t.root_node = t._merge(trie1.root_node, trie2.root_node)
         return t
 
-    def _iter(self, node, key, reverse=False, path=[]):
+    def _iter(self, node, key, reverse=False, path=None):
         # print 'iter', node, key, 'reverse =', reverse, 'path =', path
+        if path is None:
+            path = []
         node_type = self._get_node_type(node)
 
         if node_type == NODE_TYPE_BLANK:

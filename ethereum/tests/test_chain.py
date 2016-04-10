@@ -35,20 +35,24 @@ def accounts():
     return k, v, k2, v2
 
 
-def mkgenesis(initial_alloc={}, db=None):
+def mkgenesis(initial_alloc=None, db=None):
+    if initial_alloc is None:
+        initial_alloc = {}
     assert db is not None
     o = blocks.genesis(env(db), start_alloc=initial_alloc, difficulty=1)
     assert o.difficulty == 1
     return o
 
 
-def mkquickgenesis(initial_alloc={}, db=None):
+def mkquickgenesis(initial_alloc=None, db=None):
     "set INITIAL_DIFFICULTY to a value that is quickly minable"
+    if initial_alloc is None:
+        initial_alloc = {}
     assert db is not None
     return blocks.genesis(env(db), start_alloc=initial_alloc, difficulty=1)
 
 
-def mine_on_chain(chain, parent=None, transactions=[], coinbase=None):
+def mine_on_chain(chain, parent=None, transactions=None, coinbase=None):
     """Mine the next block on a chain.
 
     The newly mined block will be considered to be the head of the chain,
@@ -59,6 +63,8 @@ def mine_on_chain(chain, parent=None, transactions=[], coinbase=None):
     :param transactions: a list of transactions to include in the new block
     :param coinbase: optional coinbase to replace ``chain.coinbase``
     """
+    if transactions is None:
+        transactions = []
     if not parent:
         parent = chain.head
     if coinbase:
@@ -80,7 +86,9 @@ def mine_on_chain(chain, parent=None, transactions=[], coinbase=None):
     return b
 
 
-def mine_next_block(parent, coinbase=None, transactions=[]):
+def mine_next_block(parent, coinbase=None, transactions=None):
+    if transactions is None:
+        transactions = []
     if coinbase:
         c = Chain(env=parent.env, genesis=parent, coinbase=coinbase)
     else:

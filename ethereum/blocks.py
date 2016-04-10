@@ -368,8 +368,12 @@ class Block(rlp.Serializable):
         ('uncles', CountableList(BlockHeader))
     ]
 
-    def __init__(self, header, transaction_list=[], uncles=[], env=None,
+    def __init__(self, header, transaction_list=None, uncles=None, env=None,
                  parent=None, making=False):
+        if transaction_list is None:
+            transaction_list = []
+        if uncles is None:
+            uncles = []
         assert isinstance(env, Env), "No Env object given"
         assert isinstance(env.db, BaseDB), "No database object given"
         self.env = env # don't re-set after init
@@ -533,11 +537,13 @@ class Block(rlp.Serializable):
 
     @classmethod
     def init_from_parent(cls, parent, coinbase, nonce=b'', extra_data=b'',
-                         timestamp=int(time.time()), uncles=[], env=None):
+                         timestamp=int(time.time()), uncles=None, env=None):
         """Create a new block based on a parent block.
 
         The block will not include any transactions and will not be finalized.
         """
+        if uncles is None:
+                uncles = []
         header = BlockHeader(prevhash=parent.hash,
                              uncles_hash=utils.sha3(rlp.encode(uncles)),
                              coinbase=coinbase,

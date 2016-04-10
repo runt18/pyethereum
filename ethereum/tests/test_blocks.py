@@ -44,7 +44,9 @@ def valueconv(k, v):
     return v
 
 
-def run_block_test(params, config_overrides = {}):
+def run_block_test(params, config_overrides = None):
+    if config_overrides is None:
+        config_overrides = {}
     b = blocks.genesis(env, start_alloc=params["pre"])
     gbh = params["genesisBlockHeader"]
     b.bloom = utils.scanners['int256b'](gbh["bloom"])
