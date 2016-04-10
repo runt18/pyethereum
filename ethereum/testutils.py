@@ -75,7 +75,7 @@ def compare_post_states(shouldbe, reallyis):
     if shouldbe is None and reallyis is None:
         return True
     if shouldbe is None or reallyis is None:
-        raise Exception("Shouldbe: %r \n\nreallyis: %r" % (shouldbe, reallyis))
+        raise Exception("Shouldbe: {0!r} \n\nreallyis: {1!r}".format(shouldbe, reallyis))
     for k in shouldbe:
         if k not in reallyis:
             r = {"nonce": 0, "balance": 0, "code": b"0x", "storage": {}}
@@ -83,8 +83,7 @@ def compare_post_states(shouldbe, reallyis):
             r = acct_standard_form(reallyis[k])
         s = acct_standard_form(shouldbe[k])
         if s != r:
-            raise Exception("Key %r\n\nshouldbe: %r \n\nreallyis: %r" %
-                            (k, s, r))
+            raise Exception("Key {0!r}\n\nshouldbe: {1!r} \n\nreallyis: {2!r}".format(k, s, r))
     return True
 
 
@@ -268,8 +267,7 @@ def run_vm_test(params, mode, profiler=None):
             shouldbe = normalize_value(k, params1)
             reallyis = normalize_value(k, params2)
             if shouldbe != reallyis:
-                raise Exception("Mismatch: " + k + ':\n shouldbe %r\n reallyis %r' %
-                                (shouldbe, reallyis))
+                raise Exception("Mismatch: " + k + ':\n shouldbe {0!r}\n reallyis {1!r}'.format(shouldbe, reallyis))
     elif mode == TIME:
         return time_post - time_pre
 
@@ -392,8 +390,7 @@ def run_state_test(params, mode):
             shouldbe = params1.get(k, None)
             reallyis = params2.get(k, None)
             if shouldbe != reallyis:
-                raise Exception("Mismatch: " + k + ':\n shouldbe %r\n reallyis %r' %
-                                (shouldbe, reallyis))
+                raise Exception("Mismatch: " + k + ':\n shouldbe {0!r}\n reallyis {1!r}'.format(shouldbe, reallyis))
 
     elif mode == TIME:
         return time_post - time_pre
@@ -443,9 +440,9 @@ def run_ethash_test(params, mode):
         return params
     elif mode == VERIFY:
         should, actual = header.mixhash, light_verify['mixhash']
-        assert should == actual, "Mismatch: mixhash %r %r" % (should, actual)
+        assert should == actual, "Mismatch: mixhash {0!r} {1!r}".format(should, actual)
         for k, v in list(out.items()):
-            assert params[k] == v, "Mismatch: " + k + ' %r %r' % (params[k], v)
+            assert params[k] == v, "Mismatch: " + k + ' {0!r} {1!r}'.format(params[k], v)
     elif mode == TIME:
         return {
             "cache_gen": t2 - t1,

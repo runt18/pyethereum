@@ -33,12 +33,12 @@ class RefcountDB(BaseDB):
             new_refcount = utils.encode_int(refcount + 1)
             self.db.put(b'r:'+k, rlp.encode([new_refcount, v]))
             if self.logging:
-                sys.stderr.write('increasing %s %r to: %d\n' % (utils.encode_hex(k), v, refcount + 1))
+                sys.stderr.write('increasing {0!s} {1!r} to: {2:d}\n'.format(utils.encode_hex(k), v, refcount + 1))
         except:
             self.db.put(b'r:'+k, rlp.encode([ONE_ENCODED, v]))
             self.journal.append([ZERO_ENCODED, k])
             if self.logging:
-                sys.stderr.write('increasing %s %r to: %d\n' % (utils.encode_hex(k), v, 1))
+                sys.stderr.write('increasing {0!s} {1!r} to: {2:d}\n'.format(utils.encode_hex(k), v, 1))
 
     put = inc_refcount
 
@@ -48,7 +48,7 @@ class RefcountDB(BaseDB):
         node_object = rlp.decode(self.db.get(b'r:'+k))
         refcount = utils.decode_int(node_object[0])
         if self.logging:
-            sys.stderr.write('decreasing %s to: %d\n' % (utils.encode_hex(k), refcount - 1))
+            sys.stderr.write('decreasing {0!s} to: {1:d}\n'.format(utils.encode_hex(k), refcount - 1))
         assert refcount > 0
         self.journal.append([node_object[0], k])
         new_refcount = utils.encode_int(refcount - 1)
@@ -88,7 +88,7 @@ class RefcountDB(BaseDB):
                     pruned += 1
             except:
                 pass
-        sys.stderr.write('%d nodes successfully pruned\n' % pruned)
+        sys.stderr.write('{0:d} nodes successfully pruned\n'.format(pruned))
         # Delete the deathrow after processing it
         try:
             self.db.delete('deathrow:'+str(epoch))
@@ -114,8 +114,7 @@ class RefcountDB(BaseDB):
                 new_refcount = utils.encode_int(DEATH_ROW_OFFSET + timeout_epoch)
                 self.db.put(b'r:'+nodekey, rlp.encode([new_refcount, val]))
         if len(self.death_row) > 0:
-            sys.stderr.write('%d nodes marked for pruning during block %d\n' %
-                             (len(self.death_row), timeout_epoch))
+            sys.stderr.write('{0:d} nodes marked for pruning during block {1:d}\n'.format(len(self.death_row), timeout_epoch))
         death_row_nodes.extend(self.death_row)
         self.death_row = []
         self.db.put('deathrow:'+str(timeout_epoch),

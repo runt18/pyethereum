@@ -54,7 +54,7 @@ def calc_dataset(full_size, cache):
     percent = (full_size // HASH_BYTES) // 100
     for i in range(full_size // HASH_BYTES):
         if i % percent == 0:
-            sys.stderr.write("Completed %d items, %d percent\n" % (i, i // percent))
+            sys.stderr.write("Completed {0:d} items, {1:d} percent\n".format(i, i // percent))
         o.append(calc_dataset_item(cache, i))
     return o
 

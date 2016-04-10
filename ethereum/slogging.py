@@ -83,7 +83,7 @@ def get_configuration():
         if hasattr(logger, 'level')
     )
 
-    config_string = ','.join('%s:%s' % x for x in name_levels)
+    config_string = ','.join('{0!s}:{1!s}'.format(*x) for x in name_levels)
 
     return dict(config_string=config_string, log_json=root.log_json)
 

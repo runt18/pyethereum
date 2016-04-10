@@ -47,7 +47,7 @@ def test_mul():
     t.gas_limit = 100000000
     x = time.time()
     c.exp([i for i in range(81)], 31415)
-    print('Exponentiation done in: %f' % (time.time() - x))
+    print('Exponentiation done in: {0:f}'.format((time.time() - x)))
 
 if __name__ == '__main__':
     test_mul()

@@ -16,8 +16,7 @@ def import_chain_data(raw_blocks_fn, test_db_path, skip=0):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("usage:%s <raw_blocks_fn> <db_path> <skip?> <formt?>"
-              % sys.argv[0])
+        print("usage:{0!s} <raw_blocks_fn> <db_path> <skip?> <formt?>".format(sys.argv[0]))
         sys.exit(1)
     raw_blocks_fn = sys.argv[1]
     test_db_path = sys.argv[2]

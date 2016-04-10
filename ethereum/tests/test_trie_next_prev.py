@@ -28,12 +28,12 @@ def load_tests():
 
 def run_test(name):
 
-    logger.debug('testing %s' % name)
+    logger.debug('testing {0!s}'.format(name))
     t = trie.Trie(new_db())
     data = load_tests()[name]
 
     for k in data['in']:
-        logger.debug('updating with (%s, %s)' % (k, k))
+        logger.debug('updating with ({0!s}, {1!s})'.format(k, k))
         k = to_string(k)
         t.update(k, k)
     for point, prev, nxt in data['tests']:

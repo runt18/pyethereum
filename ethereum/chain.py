@@ -42,7 +42,7 @@ class Index(object):
 
     # block by number #########
     def _block_by_number_key(self, number):
-        return 'blocknumber:%d' % number
+        return 'blocknumber:{0:d}'.format(number)
 
     def update_blocknumbers(self, blk):
         "start from head and update until the existing indices match the block"

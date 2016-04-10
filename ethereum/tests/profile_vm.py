@@ -12,7 +12,7 @@ logger = get_logger()
 
 
 def do_test_vm(filename, testname=None, testdata=None, limit=99999999, profiler=None):
-    logger.debug('running test:%r in %r' % (testname, filename))
+    logger.debug('running test:{0!r} in {1!r}'.format(testname, filename))
     testutils.run_vm_test(testutils.fixture_to_bytes(testdata), testutils.VERIFY, profiler=profiler)
 
 if __name__ == '__main__':
@@ -33,7 +33,7 @@ if __name__ == '__main__':
                 do_test_vm(filename, testname, testdata, profiler=profiler)
                 seen += str(testname)
                 i += 1
-        print 'ran %d tests' % i
+        print 'ran {0:d} tests'.format(i)
         print 'test key', sha3(seen).encode('hex')
 
     if len(sys.argv) == 1:

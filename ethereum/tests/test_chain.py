@@ -301,11 +301,11 @@ def test_block_serialization_with_transaction_other_db():
     a_blk = mkquickgenesis({v: {"balance": utils.denoms.ether * 1}}, db=a_db)
     store_block(a_blk)
     tx = get_transaction()
-    logger.debug('a: state_root before tx %r' % hx(a_blk.state_root))
-    logger.debug('a: state:\n%s' % utils.dump_state(a_blk.state))
+    logger.debug('a: state_root before tx {0!r}'.format(hx(a_blk.state_root)))
+    logger.debug('a: state:\n{0!s}'.format(utils.dump_state(a_blk.state)))
     a_blk2 = mine_next_block(a_blk, transactions=[tx])
-    logger.debug('a: state_root after tx %r' % hx(a_blk2.state_root))
-    logger.debug('a: state:\n%s' % utils.dump_state(a_blk2.state))
+    logger.debug('a: state_root after tx {0!r}'.format(hx(a_blk2.state_root)))
+    logger.debug('a: state:\n{0!s}'.format(utils.dump_state(a_blk2.state)))
     assert tx in a_blk2.get_transactions()
     store_block(a_blk2)
     assert tx in a_blk2.get_transactions()
@@ -316,10 +316,10 @@ def test_block_serialization_with_transaction_other_db():
 
     assert b_blk.number == 0
     assert b_blk == a_blk
-    logger.debug('b: state_root before tx %r' % hx(b_blk.state_root))
+    logger.debug('b: state_root before tx {0!r}'.format(hx(b_blk.state_root)))
     logger.debug('starting deserialization of remote block w/ tx')
     b_blk2 = rlp.decode(rlp.encode(a_blk2), blocks.Block, env=env(b_blk.db))
-    logger.debug('b: state_root after %r' % hx(b_blk2.state_root))
+    logger.debug('b: state_root after {0!r}'.format(hx(b_blk2.state_root)))
 
     assert a_blk2.hash == b_blk2.hash
 

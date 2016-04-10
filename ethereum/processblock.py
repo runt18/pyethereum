@@ -69,14 +69,13 @@ class Log(rlp.Serializable):
         }
 
     def __repr__(self):
-        return '<Log(address=%r, topics=%r, data=%r)>' %  \
-            (encode_hex(self.address), self.topics, self.data)
+        return '<Log(address={0!r}, topics={1!r}, data={2!r})>'.format(encode_hex(self.address), self.topics, self.data)
 
 
 def validate_transaction(block, tx):
 
     def rp(what, actual, target):
-        return '%r: %r actual:%r target:%r' % (tx, what, actual, target)
+        return '{0!r}: {1!r} actual:{2!r} target:{3!r}'.format(tx, what, actual, target)
 
     # (1) The transaction signature is valid;
     if not tx.sender:  # sender is set and validated on Transaction initialization
@@ -114,7 +113,7 @@ def apply_transaction(block, tx):
     # print block.get_nonce(tx.sender), '@@@'
 
     def rp(what, actual, target):
-        return '%r: %r actual:%r target:%r' % (tx, what, actual, target)
+        return '{0!r}: {1!r} actual:{2!r} target:{3!r}'.format(tx, what, actual, target)
 
     intrinsic_gas = tx.intrinsic_gas_used
     if block.number >= block.config['HOMESTEAD_FORK_BLKNUM']:

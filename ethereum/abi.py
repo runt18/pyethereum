@@ -152,19 +152,19 @@ def decint(n):
     if is_numeric(n) and n < 2**256 and n >= -2**255:
         return n
     elif is_numeric(n):
-        raise EncodingError("Number out of range: %r" % n)
+        raise EncodingError("Number out of range: {0!r}".format(n))
     elif is_string(n) and len(n) == 40:
         return big_endian_to_int(decode_hex(n))
     elif is_string(n) and len(n) <= 32:
         return big_endian_to_int(n)
     elif is_string(n) and len(n) > 32:
-        raise EncodingError("String too long: %r" % n)
+        raise EncodingError("String too long: {0!r}".format(n))
     elif n is True:
         return 1
     elif n is False or n is None:
         return 0
     else:
-        raise EncodingError("Cannot encode integer: %r" % n)
+        raise EncodingError("Cannot encode integer: {0!r}".format(n))
 
 
 # Encodes a base datum
@@ -205,7 +205,7 @@ def encode_single(typ, arg):
     # Strings
     elif base == 'string' or base == 'bytes':
         if not is_string(arg):
-            raise EncodingError("Expecting string: %r" % arg)
+            raise EncodingError("Expecting string: {0!r}".format(arg))
         # Fixed length: string<sz>
         if len(sub):
             assert int(sub) <= 32
@@ -219,7 +219,7 @@ def encode_single(typ, arg):
     # Hashes: hash<sz>
     elif base == 'hash':
         if not (int(sub) and int(sub) <= 32):
-            raise EncodingError("too long: %r" % arg)
+            raise EncodingError("too long: {0!r}".format(arg))
         if isnumeric(arg):
             return zpad(encode_int(arg), 32)
         elif len(arg) == int(sub):
@@ -227,7 +227,7 @@ def encode_single(typ, arg):
         elif len(arg) == int(sub) * 2:
             return zpad(decode_hex(arg), 32)
         else:
-            raise EncodingError("Could not parse hash: %r" % arg)
+            raise EncodingError("Could not parse hash: {0!r}".format(arg))
     # Addresses: address (== hash160)
     elif base == 'address':
         assert sub == ''
@@ -240,8 +240,8 @@ def encode_single(typ, arg):
         elif len(arg) == 42 and arg[:2] == '0x':
             return zpad(decode_hex(arg[2:]), 32)
         else:
-            raise EncodingError("Could not parse address: %r" % arg)
-    raise EncodingError("Unhandled type: %r %r" % (base, sub))
+            raise EncodingError("Could not parse address: {0!r}".format(arg))
+    raise EncodingError("Unhandled type: {0!r} {1!r}".format(base, sub))
 
 
 def process_type(typ):
@@ -326,8 +326,7 @@ def enc(typ, arg):
             myhead += enc(lentyp, len(arg))
         else:
             assert len(arg) == arrlist[-1][0], \
-                "Wrong array size: found %d, expecting %d" % \
-                (len(arg), arrlist[-1][0])
+                "Wrong array size: found {0:d}, expecting {1:d}".format(len(arg), arrlist[-1][0])
         for i in range(len(arg)):
             if subsize is None:
                 myhead += enc(lentyp, 32 * len(arg) + len(mytail))

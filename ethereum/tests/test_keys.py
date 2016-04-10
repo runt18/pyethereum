@@ -7,7 +7,7 @@ logger = get_logger()
 
 
 def test_key(filename, testname, testdata,):
-    logger.debug('running test:%r in %r' % (testname, filename))
+    logger.debug('running test:{0!r} in {1!r}'.format(testname, filename))
     assert keys.check_keystore_json(testdata["json"])
     privkey = keys.decode_keystore_json(testdata["json"], testdata["password"])
     assert utils.encode_hex(privkey) == utils.to_string(testdata["priv"])

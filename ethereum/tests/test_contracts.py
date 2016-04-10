@@ -116,10 +116,10 @@ returnten_code = \
     '''
 extern mul2: [double:i]
 
-x = create("%s")
+x = create("{0!s}")
 log(x)
 return(x.double(5))
-''' % filename
+'''.format(filename)
 
 
 def test_returnten():
@@ -146,12 +146,12 @@ filename2 = "inner_qwertyuioplkjhgfdsa.se"
 
 inset_outer_code = \
     '''
-inset("%s")
+inset("{0!s}")
 
 def foo():
     res = self.g(12)
     return res
-''' % filename2
+'''.format(filename2)
 
 
 def test_inset():
@@ -181,8 +181,8 @@ def foo():
     res = self.g(12)
     return res
 
-inset("%s")
-''' % filename25
+inset("{0!s}")
+'''.format(filename25)
 
 
 def test_inset2():
@@ -487,13 +487,13 @@ callcode_test_code = \
     '''
 extern add1: [main:i]
 
-x = create("%s")
+x = create("{0!s}")
 x.main(6)
 x.main(4, call=code)
 x.main(60, call=code)
 x.main(40)
 return(self.storage[1])
-''' % filename3
+'''.format(filename3)
 
 
 def test_callcode():
@@ -1065,11 +1065,11 @@ extern sorter: [sort:a]
 data sorter
 
 def init():
-    self.sorter = create("%s")
+    self.sorter = create("{0!s}")
 
 def test(args:arr):
     return(self.sorter.sort(args, outsz=len(args)):arr)
-''' % filename9
+'''.format(filename9)
 
 
 @pytest.mark.timeout(100)
@@ -1535,9 +1535,9 @@ new_format_outer_test_code = """
 extern blah: [foo:[int256,int256[],bytes]:int256]
 
 def bar():
-    x = create("%s")
+    x = create("{0!s}")
     return x.foo(17, [3, 5, 7], text("dog"))
-""" % filename4
+""".format(filename4)
 
 
 def test_new_format():
@@ -1575,14 +1575,14 @@ extern foo: [get_address:[int256]:address, register:[int256,address]:_]
 data sub
 
 def init():
-    self.sub = create("%s")
+    self.sub = create("{0!s}")
 
 def get_address(key):
     return(self.sub.get_address(key):address)
 
 def register(key, addr:address):
     self.sub.register(key, addr)
-""" % filename5
+""".format(filename5)
 
 
 def test_inner_abi_address_output():

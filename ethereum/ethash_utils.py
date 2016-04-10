@@ -35,7 +35,7 @@ def decode_int(s):
 
 
 def encode_int(s):
-    a = "%x" % s
+    a = "{0:x}".format(s)
     return b'' if s == 0 else decode_hex('0' * (len(a) % 2) + a)[::-1]
 
 

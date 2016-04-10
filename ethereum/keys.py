@@ -115,14 +115,14 @@ if scrypt is not None:
 def make_keystore_json(priv, pw, kdf="pbkdf2", cipher="aes-128-ctr"):
     # Get the hash function and default parameters
     if kdf not in kdfs:
-        raise Exception("Hash algo %s not supported" % kdf)
+        raise Exception("Hash algo {0!s} not supported".format(kdf))
     kdfeval = kdfs[kdf]["calc"]
     kdfparams = kdfs[kdf]["mkparams"]()
     # Compute derived key
     derivedkey = kdfeval(pw, kdfparams)
     # Get the cipher and default parameters
     if cipher not in ciphers:
-        raise Exception("Encryption algo %s not supported" % cipher)
+        raise Exception("Encryption algo {0!s} not supported".format(cipher))
     encrypt = ciphers[cipher]["encrypt"]
     cipherparams = ciphers[cipher]["mkparams"]()
     # Produce the encryption key and encrypt
@@ -186,13 +186,13 @@ def decode_keystore_json(jsondata, pw):
     kdfparams = cryptdata["kdfparams"]
     kdf = cryptdata["kdf"]
     if cryptdata["kdf"] not in kdfs:
-        raise Exception("Hash algo %s not supported" % kdf)
+        raise Exception("Hash algo {0!s} not supported".format(kdf))
     kdfeval = kdfs[kdf]["calc"]
     # Get cipher and parameters
     cipherparams = cryptdata["cipherparams"]
     cipher = cryptdata["cipher"]
     if cryptdata["cipher"] not in ciphers:
-        raise Exception("Encryption algo %s not supported" % cipher)
+        raise Exception("Encryption algo {0!s} not supported".format(cipher))
     decrypt = ciphers[cipher]["decrypt"]
     # Compute the derived key
     derivedkey = kdfeval(pw, kdfparams)

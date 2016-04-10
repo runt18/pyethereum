@@ -184,7 +184,7 @@ class Transaction(rlp.Serializable):
         return not self.__eq__(other)
 
     def __repr__(self):
-        return '<Transaction(%s)>' % encode_hex(self.hash)[:4]
+        return '<Transaction({0!s})>'.format(encode_hex(self.hash)[:4])
 
     def __structlog__(self):
         return encode_hex(self.hash)

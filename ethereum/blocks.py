@@ -299,7 +299,7 @@ class BlockHeader(rlp.Serializable):
         return d
 
     def __repr__(self):
-        return '<%s(#%d %s)>' % (self.__class__.__name__, self.number,
+        return '<{0!s}(#{1:d} {2!s})>'.format(self.__class__.__name__, self.number,
                                  encode_hex(self.hash)[:8])
 
     def __eq__(self, other):
@@ -474,7 +474,7 @@ class Block(rlp.Serializable):
         def must(what, f, symb, a, b):
             if not f(a, b):
                 if dump_block_on_failed_verification:
-                    sys.stderr.write('%r' % self.to_dict())
+                    sys.stderr.write('{0!r}'.format(self.to_dict()))
                 raise VerificationFailed(what, a, symb, b)
 
         def must_equal(what, a, b):
@@ -506,8 +506,7 @@ class Block(rlp.Serializable):
         if not self.check_fields():
             raise ValueError("Block is invalid")
         if len(to_string(self.header.extra_data)) > self.config['MAX_EXTRADATA_LENGTH']:
-            raise ValueError("Extra data cannot exceed %d bytes" \
-                             % default_config['MAX_EXTRADATA_LENGTH'])
+            raise ValueError("Extra data cannot exceed {0:d} bytes".format(default_config['MAX_EXTRADATA_LENGTH']))
         if self.header.coinbase == '':
             raise ValueError("Coinbase cannot be empty address")
         if not self.state.root_hash_valid():
@@ -1119,7 +1118,7 @@ class Block(rlp.Serializable):
         log_state.trace('reverting')
         while len(self.journal) > mysnapshot['journal_size']:
             cache, index, prev, post = self.journal.pop()
-            log_state.trace('%r %r %r %r' % (cache, index, prev, post))
+            log_state.trace('{0!r} {1!r} {2!r} {3!r}'.format(cache, index, prev, post))
             if prev is not None:
                 self.caches[cache][index] = prev
             else:
@@ -1261,7 +1260,7 @@ class Block(rlp.Serializable):
         return self.number < other.number
 
     def __repr__(self):
-        return '<%s(#%d %s)>' % (self.__class__.__name__, self.number, encode_hex(self.hash)[:8])
+        return '<{0!s}(#{1:d} {2!s})>'.format(self.__class__.__name__, self.number, encode_hex(self.hash)[:8])
 
     def __structlog__(self):
         return encode_hex(self.hash)

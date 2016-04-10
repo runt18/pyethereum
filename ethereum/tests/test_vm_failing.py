@@ -7,7 +7,7 @@ logger = get_logger()
 
 
 def do_test_vm(filename, testname=None, testdata=None, limit=99999999):
-    logger.debug('running test:%r in %r' % (testname, filename))
+    logger.debug('running test:{0!r} in {1!r}'.format(testname, filename))
     testutils.check_vm_test(testutils.fixture_to_bytes(testdata))
 
 
@@ -37,7 +37,7 @@ def mk_test_func(filename, testname, testdata):
 collected = []
 for filename, tests in list(fixtures.items()):
     for testname, testdata in list(tests.items()):
-        func_name = 'test_%s_%s' % (filename, testname)
+        func_name = 'test_{0!s}_{1!s}'.format(filename, testname)
         if testname not in failing:
             continue
         collected.append((func_name, filename, testname, testdata))

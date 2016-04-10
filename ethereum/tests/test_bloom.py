@@ -42,7 +42,7 @@ for filename, tests in list(vm_tests_fixtures().items()):
     for testname, testdata in list(tests.items()):
         if 'logs' not in testdata or 'log' not in testname.lower():
             continue
-        func_name = 'test_%s_%s' % (filename, testname)
+        func_name = 'test_{0!s}_{1!s}'.format(filename, testname)
         globals()[func_name] = gen_func(testdata['logs'])
 
 

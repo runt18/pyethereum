@@ -22,7 +22,7 @@ def check_db_tightness(trees, db):
         for k, v in db.kv.items():
             if rlp.decode(rlp.decode(v)[1]) not in all_nodes:
                 print(utils.encode_hex(k[2:]), rlp.decode(rlp.decode(v)[1]))
-        raise Exception("unpruned key leak: %d %d" % (len(db.kv), len(all_nodes)))
+        raise Exception("unpruned key leak: {0:d} {1:d}".format(len(db.kv), len(all_nodes)))
 
 
 def test_basic_pruning():
@@ -141,7 +141,7 @@ def test_two_trees():
         db.cleanup(i)
         check_db_tightness([t1, t2], db)
     for i in range(NODES):
-        sys.stderr.write('clearing: %d\n' % i)
+        sys.stderr.write('clearing: {0:d}\n'.format(i))
         t1.delete(to_string(NODES - 1 - i))
         db.commit_refcount_changes(NODES + i)
         db.cleanup(NODES + i)
@@ -286,7 +286,7 @@ def test_block_18503_changes():
         c += 1
     print(utils.encode_hex(t1.root_hash))
     for k, v in toadd:
-        sys.stderr.write('kv: %s %s\n' % (k, v))
+        sys.stderr.write('kv: {0!s} {1!s}\n'.format(k, v))
         triekey = utils.sha3(utils.zpad(utils.decode_hex(k[2:]), 32))
         if v == '0x':
             t1.delete(triekey)
@@ -365,7 +365,7 @@ def test_block_18315_changes():
     print(utils.encode_hex(t1.root_hash))
     print(t1.to_dict())
     for k, v in toadd:
-        sys.stderr.write('kv: %s %s\n' % (k, v))
+        sys.stderr.write('kv: {0!s} {1!s}\n'.format(k, v))
         triekey = utils.sha3(utils.zpad(utils.decode_hex(k[2:]), 32))
         if v == '0x':
             t1.delete(triekey)

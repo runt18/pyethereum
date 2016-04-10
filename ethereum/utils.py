@@ -146,7 +146,7 @@ def normalize_address(x, allow_blank=False):
         assert len(x) == 24 and sha3(x[:20])[:4] == x[-4:]
         x = x[:20]
     if len(x) != 20:
-        raise Exception("Invalid address format: %r" % x)
+        raise Exception("Invalid address format: {0!r}".format(x))
     return x
 
 
@@ -269,7 +269,7 @@ def encode_root(v):
 def encode_int(v):
     '''encodes an integer into serialization'''
     if not is_numeric(v) or v < 0 or v >= TT256:
-        raise Exception("Integer invalid or out of range: %r" % v)
+        raise Exception("Integer invalid or out of range: {0!r}".format(v))
     return int_to_big_endian(v)
 
 
@@ -390,7 +390,7 @@ def print_func_call(ignore_first_arg=False, max_call_number=100):
 def dump_state(trie):
     res = ''
     for k, v in list(trie.to_dict().items()):
-        res += '%r:%r\n' % (encode_hex(k), encode_hex(v))
+        res += '{0!r}:{1!r}\n'.format(encode_hex(k), encode_hex(v))
     return res
 
 

@@ -14,9 +14,9 @@ returnten_code = \
     '''
 extern mul2: [double:i]
 
-x = create("%s")
+x = create("{0!s}")
 return(x.double(5))
-''' % filename
+'''.format(filename)
 
 
 def test_returnten():

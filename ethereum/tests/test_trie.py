@@ -36,7 +36,7 @@ def load_tests():
 
 def run_test(name, pairs):
 
-    logger.debug('testing %s' % name)
+    logger.debug('testing {0!s}'.format(name))
 
     def _dec(x):
         if is_string(x) and x.startswith(b'0x'):
@@ -61,7 +61,7 @@ def run_test(name, pairs):
         for k, v in deletes:
             t.delete(k)
         if pairs['root'] != b'0x' + encode_hex(t.root_hash):
-            raise Exception("Mismatch: %r %r %r %r" % (
+            raise Exception("Mismatch: {0!r} {1!r} {2!r} {3!r}".format(
                 name, pairs['root'], b'0x' + encode_hex(t.root_hash), (i, list(permut) + deletes)))
 
 

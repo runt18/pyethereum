@@ -64,7 +64,7 @@ def main():
     for filename, tests in list(fixtures.items()):
         for testname, testdata in list(tests.items()):
             if len(sys.argv) < 3 or testname == sys.argv[2]:
-                print("Testing: %s %s" % (filename, testname))
+                print("Testing: {0!s} {1!s}".format(filename, testname))
                 # testutils.check_state_test(testdata)
                 test_transaction(filename, testname, testdata)
 

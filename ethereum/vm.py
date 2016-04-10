@@ -69,7 +69,7 @@ class Message(object):
         self.transfers_value = transfers_value
 
     def __repr__(self):
-        return '<Message(to:%s...)>' % self.to[:8]
+        return '<Message(to:{0!s}...)>'.format(self.to[:8])
 
 
 class Compustate():

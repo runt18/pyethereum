@@ -95,7 +95,7 @@ def run_block_test(params, config_overrides = {}):
             blockmap[b2.hash] = b2
             env.db.put(b2.hash, rlp.encode(b2))
         if b2:
-            print 'Block %d with state root %s' % (b2.number, b2.state.root_hash.encode('hex'))
+            print 'Block {0:d} with state root {1!s}'.format(b2.number, b2.state.root_hash.encode('hex'))
         # blkdict = b.to_dict(False, True, False, True)
         # assert blk["blockHeader"] == \
         #     translate_keys(blkdict["header"], translator_list, lambda y, x: x, [])
@@ -134,7 +134,7 @@ def main():
         for filename, tests in list(fixtures.items()):
             for testname, testdata in list(tests.items()):
                 if testname == sys.argv[2]:
-                    print("Testing: %s %s" % (filename, testname))
+                    print("Testing: {0!s} {1!s}".format(filename, testname))
                     run_block_test(testdata, {
                         'HOMESTEAD_FORK_BLKNUM': 0 if 'Homestead' in filename else 5 if 'TestNetwork' in filename
                         else 1000000})
@@ -142,7 +142,7 @@ def main():
         for filename, tests in list(fixtures.items()):
             for testname, testdata in list(tests.items()):
                 if (filename.split('/')[-1], testname) not in excludes:
-                    print("Testing: %s %s" % (filename, testname))
+                    print("Testing: {0!s} {1!s}".format(filename, testname))
                     run_block_test(testdata, {
                         'HOMESTEAD_FORK_BLKNUM': 0 if 'Homestead' in filename else 5 if 'TestNetwork' in filename else 1000000})
 
